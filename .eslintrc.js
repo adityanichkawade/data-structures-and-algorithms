@@ -12,5 +12,6 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    complexity: ['error', 5],
   },
 };
