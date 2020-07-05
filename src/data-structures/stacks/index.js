@@ -9,7 +9,7 @@ class Stack {
   }
 
   isEmpty() {
-    return this.items.isEmpty();
+    return this.items.length <= 0;
   }
 
   push(data) {
