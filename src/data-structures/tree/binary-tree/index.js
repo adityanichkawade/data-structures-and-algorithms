@@ -12,6 +12,18 @@ function setCorrectNode(node, newNode) {
   }
 }
 
+function computeMaxData(max, leftData, rightData, rootData) {
+  let tempMax = max;
+  if (leftData > rightData) {
+    tempMax = leftData;
+  } else {
+    tempMax = rightData;
+  }
+
+  if (rootData > tempMax) { tempMax = rootData; }
+  return tempMax;
+}
+
 class BinaryTree {
   constructor(data) {
     this.rootNode = new BinaryTreeNode(data);
@@ -76,6 +88,21 @@ class BinaryTree {
       this.postOrder(root.rightNode);
       callback(root);
     }
+  }
+
+  findMax(root) {
+    let max = Number.NEGATIVE_INFINITY;
+    if (root) {
+      const rootData = root.data;
+      const leftData = this.findMax(root.leftNode);
+      const rightData = this.findMax(root.rightNode);
+      max = computeMaxData(max, leftData, rightData, rootData);
+    }
+    return max;
+  }
+
+  getMaxNodeValue() {
+    return this.findMax(this.rootNode);
   }
 }
 
