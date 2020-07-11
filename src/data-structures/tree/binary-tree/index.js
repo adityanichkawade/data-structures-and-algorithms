@@ -12,18 +12,6 @@ function setCorrectNode(node, newNode) {
   }
 }
 
-function computeMaxData(max, leftData, rightData, rootData) {
-  let tempMax = max;
-  if (leftData > rightData) {
-    tempMax = leftData;
-  } else {
-    tempMax = rightData;
-  }
-
-  if (rootData > tempMax) { tempMax = rootData; }
-  return tempMax;
-}
-
 class BinaryTree {
   constructor(data) {
     this.rootNode = new BinaryTreeNode(data);
@@ -90,19 +78,48 @@ class BinaryTree {
     }
   }
 
-  findMax(root) {
-    let max = Number.NEGATIVE_INFINITY;
-    if (root) {
-      const rootData = root.data;
-      const leftData = this.findMax(root.leftNode);
-      const rightData = this.findMax(root.rightNode);
-      max = computeMaxData(max, leftData, rightData, rootData);
-    }
-    return max;
+  findMaxRecursive(node) {
+    const max = Number.NEGATIVE_INFINITY;
+    return (node)
+      ? Math.max(max,
+        node.data,
+        this.findMaxRecursive(node.leftNode),
+        this.findMaxRecursive(node.rightNode))
+      : max;
   }
 
-  getMaxNodeValue() {
-    return this.findMax(this.rootNode);
+  findMax() {
+    return this.findMaxRecursive(this.rootNode);
+  }
+
+  findNodeRecursive(node, data) {
+    if (!node) {
+      return null;
+    }
+    if (node.data === data) {
+      return node;
+    }
+    return this.findNodeRecursive(node.leftNode, data)
+    || this.findNodeRecursive(node.rightNode, data);
+  }
+
+  find(data) {
+    return this.findRecursive(this.rootNode, data);
+  }
+
+  findHeightRecursive(node) {
+    let leftHeight = 0; let
+      rightHeight = 0;
+    if (!node) {
+      return 0;
+    }
+    leftHeight = this.findHeightRecursive(node.leftNode);
+    rightHeight = this.findHeightRecursive(node.rightNode);
+    return (leftHeight > rightHeight) ? leftHeight + 1 : rightHeight + 1;
+  }
+
+  findHeight() {
+    return this.findHeightRecursive(this.rootNode);
   }
 }
 
