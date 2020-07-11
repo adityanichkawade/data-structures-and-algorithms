@@ -115,11 +115,32 @@ class BinaryTree {
     }
     leftHeight = this.findHeightRecursive(node.leftNode);
     rightHeight = this.findHeightRecursive(node.rightNode);
-    return (leftHeight > rightHeight) ? leftHeight + 1 : rightHeight + 1;
+    return Math.max(leftHeight, rightHeight) + 1;
   }
 
   findHeight() {
     return this.findHeightRecursive(this.rootNode);
+  }
+
+  findDeepestNodeRecursive(node, level) {
+    const deepestNode = node;
+    if (!deepestNode) {
+      return null;
+    }
+
+    if (level === 1) {
+      return deepestNode;
+    }
+
+    return (level > 1)
+      ? this.findDeepestNodeRecursive(node.leftNode, level - 1)
+      || this.findDeepestNodeRecursive(node.rightNode, level - 1)
+      : deepestNode;
+  }
+
+  findDeepestNode() {
+    const level = this.findHeight(this.rootNode);
+    return this.findDeepestNodeRecursive(this.rootNode, level);
   }
 }
 

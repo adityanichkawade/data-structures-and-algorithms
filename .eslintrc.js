@@ -11,7 +11,4 @@ module.exports = {
     ecmaVersion: 11,
     sourceType: 'module',
   },
-  rules: {
-    complexity: ['error', 5],
-  },
 };
