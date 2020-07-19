@@ -130,13 +130,16 @@ const findHeight = (aNode) => (
 const findDeepestNode = (aNode, aLevel) => {
   const deepestNode = aNode;
   if (deepestNode) {
-    return (equal(aLevel, 1)) ? deepestNode
-      : ternary(
+    return ternary(
+      equal(aLevel, 1),
+      deepestNode,
+      ternary(
         greaterThan(aLevel, 1),
         or(findDeepestNode(aNode.getLeftNode(), aLevel - 1),
           findDeepestNode(aNode.getRightNode(), aLevel - 1)),
         deepestNode,
-      );
+      ),
+    );
   }
   return null;
 };
