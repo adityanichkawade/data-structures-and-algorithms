@@ -1,146 +1,66 @@
 import BinaryTreeNode from './BinaryTreeNode';
-
-function getCorrectNode(node, newNode) {
-  return newNode.data < node.data ? node.leftNode : node.rightNode;
-}
-
-function setCorrectNode(node, newNode) {
-  if (node.data > newNode.data) {
-    node.setLeft(newNode);
-  } else {
-    node.setRight(newNode);
-  }
-}
-
+import BinaryTreeUtils from '../utils';
+/**
+ * Class representing binary tree
+ */
 class BinaryTree {
   constructor(data) {
     this.rootNode = new BinaryTreeNode(data);
   }
 
-  add(data) {
-    const newNode = new BinaryTreeNode(data);
-    if (this.rootNode) {
-      this.addNode(this.root, newNode);
-    } else {
-      this.rootNode = newNode;
-    }
+  /**
+   * Function to add new node to binary tree
+   * @param {any} aData
+   */
+  add(aData) {
+    BinaryTreeUtils.addNode(this.rootNode, new BinaryTreeNode(aData));
   }
 
-  addNode(node, newNode) {
-    const correctNode = getCorrectNode(node, newNode);
-    if (correctNode) {
-      this.addNode(correctNode, newNode);
-    } else {
-      setCorrectNode(node, newNode);
-    }
-  }
-
-  traverseTree(callback, type) {
+  /**
+   * Function to traverse tree depending upon the type of traversing user want
+   * @param {Function} aCallback
+   * @param {string} aType - preorder|inorder|postorder
+   */
+  traverseTree(aCallback, aType) {
     const traversal = {
-      PreOrder: () => {
-        this.preOrder(this.rootNode, callback);
+      preorder: () => {
+        BinaryTreeUtils.preOrder(this.rootNode, aCallback);
       },
-      InOrder: () => {
-        this.inOrder(this.rootNode, callback);
+      inorder: () => {
+        BinaryTreeUtils.inOrder(this.rootNode, aCallback);
       },
-      PostOrder: () => {
-        this.postOrder(this.rootNode, callback);
+      postorder: () => {
+        BinaryTreeUtils.postOrder(this.rootNode, aCallback);
       },
     };
 
-    const traversalFunc = traversal[type];
+    const traversalFunc = traversal[aType];
     if (traversalFunc) {
       traversalFunc();
     }
   }
 
-  preOrder(root, callback) {
-    if (root) {
-      callback(root);
-      this.preOrder(root.leftNode);
-      this.preOrder(root.rightNode);
-    }
+  /**
+   * Function to find the node matching the data
+   * @param {any} aData
+   */
+  find(aData) {
+    return BinaryTreeUtils.findRecursive(this.rootNode, aData);
   }
 
-  inOrder(root, callback) {
-    if (root) {
-      this.inOrder(root.leftNode);
-      callback(root);
-      this.inOrder(root.rightNode);
-    }
-  }
-
-  postOrder(root, callback) {
-    if (root) {
-      this.postOrder(root.leftNode);
-      this.postOrder(root.rightNode);
-      callback(root);
-    }
-  }
-
-  findMaxRecursive(node) {
-    const max = Number.NEGATIVE_INFINITY;
-    return (node)
-      ? Math.max(max,
-        node.data,
-        this.findMaxRecursive(node.leftNode),
-        this.findMaxRecursive(node.rightNode))
-      : max;
-  }
-
-  findMax() {
-    return this.findMaxRecursive(this.rootNode);
-  }
-
-  findNodeRecursive(node, data) {
-    if (!node) {
-      return null;
-    }
-    if (node.data === data) {
-      return node;
-    }
-    return this.findNodeRecursive(node.leftNode, data)
-    || this.findNodeRecursive(node.rightNode, data);
-  }
-
-  find(data) {
-    return this.findRecursive(this.rootNode, data);
-  }
-
-  findHeightRecursive(node) {
-    let leftHeight = 0; let
-      rightHeight = 0;
-    if (!node) {
-      return 0;
-    }
-    leftHeight = this.findHeightRecursive(node.leftNode);
-    rightHeight = this.findHeightRecursive(node.rightNode);
-    return Math.max(leftHeight, rightHeight) + 1;
-  }
-
+  /**
+   * Function to find the height of the binary tree
+   */
   findHeight() {
-    return this.findHeightRecursive(this.rootNode);
+    return BinaryTreeUtils.findHeight(this.rootNode);
   }
 
-  findDeepestNodeRecursive(node, level) {
-    const deepestNode = node;
-    if (!deepestNode) {
-      return null;
-    }
-
-    if (level === 1) {
-      return deepestNode;
-    }
-
-    return (level > 1)
-      ? this.findDeepestNodeRecursive(node.leftNode, level - 1)
-      || this.findDeepestNodeRecursive(node.rightNode, level - 1)
-      : deepestNode;
-  }
-
+  /**
+   * Function to find the deepest node in binary tree
+   */
   findDeepestNode() {
-    const level = this.findHeight(this.rootNode);
-    return this.findDeepestNodeRecursive(this.rootNode, level);
+    const level = BinaryTreeUtils.findHeight(this.rootNode);
+    return BinaryTreeUtils.findDeepestNodeRecursive(this.rootNode, level);
   }
 }
 

@@ -43,7 +43,7 @@ const getLastNode = (aNode) => traverseNodes(aNode).currentNode;
 const findNode = (aNode, aData) => {
   const foundNode = traverseNodes(aNode, (aCurrentNode) => equal(aCurrentNode.getData(), aData));
   const { currentNode, previousNode } = foundNode;
-  return ternary(currentNode.getData(), aData, { currentNode, previousNode }, null);
+  return ternary(equal(currentNode.getData(), aData), { currentNode, previousNode }, null);
 };
 
 /**

@@ -1,7 +1,7 @@
 import LinkedListNode from './LinkedListNode';
-import LinkedListUtils from './LinkedListUtils';
+import LinkedListUtils from '../utils';
 
-class LinkedList {
+class SinglyLinkedList {
   constructor() {
     this.headNode = null;
   }
@@ -39,4 +39,4 @@ class LinkedList {
   }
 }
 
-export default LinkedList;
+export default SinglyLinkedList;
