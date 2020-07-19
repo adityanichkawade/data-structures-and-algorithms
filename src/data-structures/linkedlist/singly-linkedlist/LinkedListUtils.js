@@ -1,6 +1,6 @@
 import {
   equal, ternary, and, notEqual,
-} from '../../utils/logic';
+} from '../../../utils/logic';
 
 const traverse = (aCurrentNode, aCallbackFunc) => {
   let currentNode = aCurrentNode;
@@ -84,8 +84,23 @@ const removeNode = (aNode, aData) => {
   return currentNode;
 };
 
+/**
+ * Function to find the length of linked list from the given node passed as parameter
+ * @param {LinkedListNode} aNode
+ */
+const getLength = (aNode) => {
+  let length = 0;
+  traverseNodes(aNode, () => {
+    length += 1;
+  });
+
+  return length;
+};
+
 export default {
   getLastNode,
   appendNode,
   removeNode,
+  findNode,
+  getLength,
 };

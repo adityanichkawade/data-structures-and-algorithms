@@ -21,6 +21,22 @@ class LinkedList {
   remove(aData) {
     this.headNode = LinkedListUtils.removeNode(this.headNode, aData);
   }
+
+  /**
+   * Function to find the node matching data passed as parameter
+   * @param {any} aData
+   */
+  find(aData) {
+    const { currentNode } = LinkedListUtils.findNode(this.headNode, aData);
+    return currentNode;
+  }
+
+  /**
+   * Function to find the length of the linked list
+   */
+  getLength() {
+    return LinkedListUtils.getLength(this.headNode);
+  }
 }
 
 export default LinkedList;
