@@ -1,7 +1,6 @@
 import {
   ternary, greaterThan, equal, or,
 } from '../../../utils/logic';
-import BinaryTreeNode from '../binary-tree/BinaryTreeNode';
 
 /**
  * Function to get the left node or right node for binary tree depending upon the
@@ -89,12 +88,12 @@ const postOrder = (aRoot, aCallback) => {
  */
 const findMax = (aNode) => {
   const max = Number.NEGATIVE_INFINITY;
-  return (aNode)
-    ? Math.max(max,
+  return ternary(aNode,
+    Math.max(max,
       aNode.getData(),
       findMax(aNode.getLeftNode()),
-      findMax(aNode.getRightNode()))
-    : max;
+      findMax(aNode.getRightNode())),
+    max);
 };
 
 /**
