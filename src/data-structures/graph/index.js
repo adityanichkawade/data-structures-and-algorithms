@@ -65,6 +65,75 @@ class Graph {
       delete this.graph[aVertex];
     }
   }
+
+  /**
+   * Function to traverse and search the vertices in the graph using depth first search
+   * @param {string} aVertex
+   */
+  depthFirstSearchRecursive(aStartVertex) {
+    const result = [];
+    const visited = {};
+    const { graph } = this;
+    (function dfs(aVertex) {
+      if (aVertex) {
+        visited[aVertex] = true;
+        result.push(aVertex);
+        graph[aVertex].forEach((aNeighbour) => (
+          !visited[aNeighbour] ? dfs(aNeighbour) : null
+        ));
+      }
+      return null;
+    }(aStartVertex));
+
+    return result;
+  }
+
+  /**
+   * Function to do depth first search iteratively
+   * @param aStartVertex
+   */
+  depthFirstSearchIterative(aStartVertex) {
+    const stack = [aStartVertex];
+    const result = [];
+    const visited = {};
+    result.push(aStartVertex);
+    visited[aStartVertex] = true;
+
+    while (stack.length) {
+      const currentVertex = stack.pop();
+      result.push(currentVertex);
+      this.graph[currentVertex].forEach((aNeighbour) => {
+        if (!visited[aNeighbour]) {
+          visited[aNeighbour] = true;
+          stack.push(aNeighbour);
+        }
+      });
+    }
+    return result;
+  }
+
+  /**
+   * Function to do breath first search
+   * @param {string} aStartVertex
+   */
+  breadthFirstSearch(aStartVertex) {
+    const queue = [aStartVertex];
+    const result = [];
+    const visited = {};
+
+    while (queue.length) {
+      const currentVertex = queue.shift();
+      result.push(currentVertex);
+      this.graph[currentVertex].forEach((aNeighbour) => {
+        if (!visited[aNeighbour]) {
+          visited[aNeighbour] = true;
+          queue.push(aNeighbour);
+        }
+      });
+    }
+
+    return result;
+  }
 }
 
 export default Graph;
