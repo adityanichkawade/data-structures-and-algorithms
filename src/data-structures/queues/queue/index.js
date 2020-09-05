@@ -3,11 +3,11 @@ class Queue {
     this.items = [];
   }
 
-  add(data) {
+  enqueue(data) {
     return this.items.push(data);
   }
 
-  remove() {
+  dequeue() {
     return this.items.shift();
   }
 
